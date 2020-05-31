@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>OPSを計算するよ</title>
+</head>
+<body>
+  <h1>OPSを計算します</h1>
+  <div id="app">
+    打数　: <input v-model.number="atBat" type="number"><br>
+    安打　: <input v-model.number="hit" type="number"><br>
+    二塁打: <input v-model.number="twobase" type="number"><br>
+    三塁打: <input v-model.number="threebase" type="number"><br>
+    本塁打: <input v-model.number="homerun" type="number"><br>
+    四球　: <input v-model.number="basesOnBalls" type="number"><br>
+    死球　: <input v-model.number="hitByPitch" type="number"><br>
+    犠飛　: <input v-model.number="sacrificeFly" type="number"><br>
+    <p>塁打:{{ totalBasesCal }}  長打率:{{ sluggingPercentageCal }}  出塁率:{{ onBasePercentageCal }}</p>
+    <p>OPS:{{ onBasePlusSluggingCal }}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        atBat: 0,
+        hit: 0,
+        twobase: 0,
+        threebase: 0,
+        homerun: 0,
+        basesOnBalls: 0,
+        hitByPitch: 0,
+        sacrificeFly: 0,
+        totalBases: 0,
+        sluggingPercentage: 0.00,
+        onBasePercentage: 0.00,
+        onBasePlusSlugging: 0.00
+      },
+      computed: {
+        // 塁打:totalBases
+        totalBasesCal: function() {
+          return this.hit + this.twobase + this.threebase * 2 + this.homerun * 3;
+        },
+        sluggingPercentageCal: function() {
+          return (this.totalBasesCal / this.atBat).toFixed(3);
+        },
+        onBasePercentageCal: function() {
+          return ((this.hit + this.basesOnBalls + this.hitByPitch) / (this.atBat + this.basesOnBalls + this.hitByPitch + this.sacrificeFly)).toFixed(3);
+        },
+        onBasePlusSluggingCal: function() {
+          return (parseFloat(this.sluggingPercentageCal) + parseFloat(this.onBasePercentageCal)).toFixed(3);
+        }
+      }
+    })
+  </script>
+</body>
+</html>
