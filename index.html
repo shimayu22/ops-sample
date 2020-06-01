@@ -1,23 +1,71 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <title>OPSを計算するよ</title>
 </head>
+
 <body>
-  <h1>OPSを計算します</h1>
-  <div id="app">
-    打数　: <input v-model.number="atBat" type="number"><br>
-    安打　: <input v-model.number="hit" type="number"><br>
-    二塁打: <input v-model.number="twobase" type="number"><br>
-    三塁打: <input v-model.number="threebase" type="number"><br>
-    本塁打: <input v-model.number="homerun" type="number"><br>
-    四球　: <input v-model.number="basesOnBalls" type="number"><br>
-    死球　: <input v-model.number="hitByPitch" type="number"><br>
-    犠飛　: <input v-model.number="sacrificeFly" type="number"><br>
-    <p>塁打:{{ totalBasesCal }}  長打率:{{ sluggingPercentageCal }}  出塁率:{{ onBasePercentageCal }}</p>
-    <p>OPS:{{ onBasePlusSluggingCal }}</p>
+  <h1 class="text-center">OPSを計算するよ</h1>
+  <hr>
+  <div id="app" class="container">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">打数　</span>
+      </div>
+      <input class="form-control col-2" v-model.number="atBat" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">安打　</span>
+      </div>
+      <input class="form-control col-2" v-model.number="hit" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">二塁打</span>
+      </div>
+      <input class="form-control col-2" v-model.number="twobase" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">三塁打</span>
+      </div>
+      <input class="form-control col-2" v-model.number="threebase" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">本塁打</span>
+      </div>
+      <input class="form-control col-2" v-model.number="homerun" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">四球　</span>
+      </div>
+      <input class="form-control col-2" v-model.number="basesOnBalls" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">死球　</span>
+      </div>
+      <input class="form-control col-2" v-model.number="hitByPitch" type="number">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">犠飛　</span>
+      </div>
+      <input class="form-control col-2" v-model.number="sacrificeFly" type="number">
+    </div>
+    <hr>
+    <p class="col">塁打:{{ totalBasesCal }}</p>
+    <p class="col">長打率:{{ sluggingPercentageCal }}</p>
+    <p class="col">出塁率:{{ onBasePercentageCal }}</p>
+    <p class="col">OPS:{{ onBasePlusSluggingCal }}</p>
   </div>
 
   <script>
@@ -39,20 +87,30 @@
       },
       computed: {
         // 塁打:totalBases
-        totalBasesCal: function() {
+        totalBasesCal: function () {
           return this.hit + this.twobase + this.threebase * 2 + this.homerun * 3;
         },
-        sluggingPercentageCal: function() {
+        sluggingPercentageCal: function () {
           return (this.totalBasesCal / this.atBat).toFixed(3);
         },
-        onBasePercentageCal: function() {
+        onBasePercentageCal: function () {
           return ((this.hit + this.basesOnBalls + this.hitByPitch) / (this.atBat + this.basesOnBalls + this.hitByPitch + this.sacrificeFly)).toFixed(3);
         },
-        onBasePlusSluggingCal: function() {
+        onBasePlusSluggingCal: function () {
           return (parseFloat(this.sluggingPercentageCal) + parseFloat(this.onBasePercentageCal)).toFixed(3);
         }
       }
     })
   </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
